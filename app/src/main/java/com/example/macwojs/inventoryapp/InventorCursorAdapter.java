@@ -1,6 +1,7 @@
 package com.example.macwojs.inventoryapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -60,12 +61,12 @@ public class InventorCursorAdapter extends CursorAdapter {
         TextView quantityTextView = (TextView) view.findViewById(R.id.quantity);
         // Extract properties from cursor
         String name = cursor.getString(cursor.getColumnIndexOrThrow(InventorEntry.COLUMN_INVENTOR_NAME));
-        String price = cursor.getString(cursor.getColumnIndexOrThrow(InventorEntry.COLUMN_INVENTOR_PRICE));
-        String quantity = cursor.getString(cursor.getColumnIndexOrThrow(InventorEntry.COLUMN_INVENTOR_QUANTITY));
+        Double price = cursor.getDouble(cursor.getColumnIndexOrThrow(InventorEntry.COLUMN_INVENTOR_PRICE));
+        Integer quantity = cursor.getInt(cursor.getColumnIndexOrThrow(InventorEntry.COLUMN_INVENTOR_QUANTITY));
 
         // Populate fields with extracted properties
         nameTextView.setText(name);
-        priceTextView.setText(price);
-        quantityTextView.setText(quantity);
+        priceTextView.setText(Double.toString(price));
+        quantityTextView.setText(Integer.toString(quantity));
     }
 }

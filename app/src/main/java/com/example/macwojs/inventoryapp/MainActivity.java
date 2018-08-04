@@ -36,17 +36,25 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ListView petListView = (ListView) findViewById(R.id.list_view_inventory);
+        ListView inventoryListView = (ListView) findViewById(R.id.list_view_inventory);
 
         //View emptyView = findViewById(R.id.empty_view);
         //petListView.setEmptyView(emptyView);
 
         mCursorAdapter = new InventorCursorAdapter(this, null);
-        petListView.setAdapter(mCursorAdapter);
+        inventoryListView.setAdapter(mCursorAdapter);
 
         getLoaderManager().initLoader(INVENTORY_LOADER, null, this);
 
-        insertData();
+        inventoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                Intent intent = new Intent(MainActivity.this, DetailsActivity.class);
+                Uri currentPetUri = ContentUris.withAppendedId(InventorEntry.CONTENT_URI ,id);
+                intent.setData(currentPetUri);
+                startActivity(intent);
+            }
+        });
     }
 
     private void insertData(){
