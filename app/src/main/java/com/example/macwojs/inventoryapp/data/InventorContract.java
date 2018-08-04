@@ -15,6 +15,8 @@
  */
 package com.example.macwojs.inventoryapp.data;
 
+import android.content.ContentResolver;
+import android.net.Uri;
 import android.provider.BaseColumns;
 
 /**
@@ -26,11 +28,17 @@ public final class InventorContract {
     // give it an empty constructor.
     private InventorContract() {}
 
+    public static final String CONTENT_AUTHORITY = "com.example.macwojs.inventoryapp";
+    public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
+    public static final String PATH_INVENTORY = "products";
+
     /**
      * Inner class that defines constant values for the pets database table.
      * Each entry in the table represents a single pet.
      */
     public static final class InventorEntry implements BaseColumns {
+
+        public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_CONTENT_URI, PATH_INVENTORY);
 
         /** Name of database table for pets */
         public final static String TABLE_NAME = "products";
@@ -52,6 +60,19 @@ public final class InventorContract {
 
 
         public final static String COLUMN_INVENTOR_SUPPLIER_PHONE = "phone";
+
+        /**
+         * The MIME type of the {@link #CONTENT_URI} for a list of pets.
+         */
+        public static final String CONTENT_LIST_TYPE =
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_INVENTORY;
+
+        /**
+         * The MIME type of the {@link #CONTENT_URI} for a single pet.
+         */
+        public static final String CONTENT_ITEM_TYPE =
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_INVENTORY;
+
     }
 
 }
