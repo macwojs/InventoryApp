@@ -48,10 +48,13 @@
         />
 
     <Button
+        android:id="@+id/sale_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:padding="@dimen/activity_margin"
-        tools:text="Sale!"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:text="Sale!"
         />
 </LinearLayout>

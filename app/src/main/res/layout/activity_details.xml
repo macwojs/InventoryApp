@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_centerVertical="true">
+    android:layout_centerVertical="true"
+    android:descendantFocusability="blocksDescendants">
 
     <LinearLayout
         android:id="@+id/name"
@@ -83,10 +84,12 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <Button
+                android:id="@+id/increase_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/increase"/>
             <Button
+                android:id="@+id/decrease_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/decrease"/>
@@ -130,6 +133,7 @@
                 tools:text="40.5$"/>
         </LinearLayout>
         <Button
+            android:id="@+id/call_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/call"/>
@@ -140,7 +144,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:orientation="horizontal">
-        <android.support.design.widget.FloatingActionButton
+        <Button
             android:id="@+id/editButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -148,7 +152,7 @@
             android:layout_alignParentRight="true"
             android:layout_margin="@dimen/fab_margin"
             android:text="Edit"/>
-        <android.support.design.widget.FloatingActionButton
+        <Button
             android:id="@+id/delButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
