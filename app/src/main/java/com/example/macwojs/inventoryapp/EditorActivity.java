@@ -15,6 +15,7 @@
  */
 package com.example.macwojs.inventoryapp;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.LoaderManager;
 import android.content.ContentValues;
@@ -25,34 +26,25 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.macwojs.inventoryapp.data.InventorContract;
 import com.example.macwojs.inventoryapp.data.InventorContract.InventorEntry;
-import com.example.macwojs.inventoryapp.data.InventorDbHelper;
 
 /**
  * Allows user to create a new pet or edit an existing one.
  */
-public class EditorActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>{
+public class EditorActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final Integer EXISTING_PET_LOADER = 0;
-
-    private InventorDbHelper mDbHelper;
 
     private EditText mNameEditText;
     private EditText mPriceEditText;
@@ -71,7 +63,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     private boolean mDataHasChanged = false;
 
     //Nasłuchuje czy coś się zmieniło
-    private View.OnTouchListener mTouchListener = new View.OnTouchListener() {
+    final private View.OnTouchListener mTouchListener = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
             mDataHasChanged = true;
@@ -79,6 +71,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         }
     };
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,12 +80,12 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         Intent intent = getIntent();
         currentInventUri = intent.getData();
 
-        Button confirm = (Button) findViewById(R.id.confirm_button);
+        Button confirm = findViewById(R.id.confirm_button);
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int result = saveInventory();
-                switch (result){
+                switch (result) {
                     case 0:
                         finish();
                         break;
@@ -106,23 +99,22 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             }
         });
 
-        if (currentInventUri==null) {
+        if (currentInventUri == null) {
             setTitle(getString(R.string.title_new_product));
-            confirm.setText("Add");
-        }
-        else {
+            confirm.setText(R.string.add_title);
+        } else {
             setTitle(getString(R.string.title_edit_product));
-            confirm.setText("Update");
+            confirm.setText(R.string.update_title);
         }
 
         getLoaderManager().initLoader(EXISTING_PET_LOADER, null, this);
 
         // Find all relevant views that we will need to read user input from
-        mNameEditText = (EditText) findViewById(R.id.edit_name);
-        mPriceEditText = (EditText) findViewById(R.id.edit_price);
-        mQuantityEditText = (EditText) findViewById(R.id.edit_quantity);
-        mSupplierNameEditText = (EditText) findViewById(R.id.edit_supplier_name);
-        mSupplierPhoneEditText = (EditText) findViewById(R.id.edit_phone);
+        mNameEditText = findViewById(R.id.edit_name);
+        mPriceEditText = findViewById(R.id.edit_price);
+        mQuantityEditText = findViewById(R.id.edit_quantity);
+        mSupplierNameEditText = findViewById(R.id.edit_supplier_name);
+        mSupplierPhoneEditText = findViewById(R.id.edit_phone);
 
         // Setup OnTouchListeners on all the input fields, so we can determine if the user
         // has touched or modified them. This will let us know if there are unsaved changes
@@ -132,8 +124,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         mQuantityEditText.setOnTouchListener(mTouchListener);
         mSupplierNameEditText.setOnTouchListener(mTouchListener);
         mSupplierPhoneEditText.setOnTouchListener(mTouchListener);
-
-        mDbHelper = new InventorDbHelper(this);
     }
 
     /**
@@ -152,8 +142,8 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             quantityInteger = Integer.parseInt(quantityString);
         }
         Double priceDouble = null;
-        if(!TextUtils.isEmpty(priceString)){
-            priceDouble = Double.parseDouble(priceString.replaceAll(" ","."));
+        if (!TextUtils.isEmpty(priceString)) {
+            priceDouble = Double.parseDouble(priceString.replaceAll(" ", "."));
         }
 
         // Create a ContentValues object where column names are the keys,
@@ -168,17 +158,38 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         if (currentInventUri == null &&
                 TextUtils.isEmpty(nameString) && TextUtils.isEmpty(priceString) &&
                 TextUtils.isEmpty(quantityString) && TextUtils.isEmpty(supplierNameString) &&
-                TextUtils.isEmpty(supplierPhoneString))
-            {return 1;}
+                TextUtils.isEmpty(supplierPhoneString)) {
+            return 1;
+        }
 
-        if(TextUtils.isEmpty(nameString)){
-            Toast.makeText(this, "You must provide the product name.",
+        if (TextUtils.isEmpty(nameString)) {
+            Toast.makeText(this, com.example.macwojs.inventoryapp.R.string.valid_name,
+                    Toast.LENGTH_SHORT).show();
+            return 2;
+        }
+        if (TextUtils.isEmpty(priceString)) {
+            Toast.makeText(this, com.example.macwojs.inventoryapp.R.string.valid_price,
+                    Toast.LENGTH_SHORT).show();
+            return 2;
+        }
+        if (TextUtils.isEmpty(quantityString)) {
+            Toast.makeText(this, com.example.macwojs.inventoryapp.R.string.valid_quantity,
+                    Toast.LENGTH_SHORT).show();
+            return 2;
+        }
+        if (TextUtils.isEmpty(supplierNameString)) {
+            Toast.makeText(this, com.example.macwojs.inventoryapp.R.string.valid_supplier_name,
+                    Toast.LENGTH_SHORT).show();
+            return 2;
+        }
+        if (TextUtils.isEmpty(supplierPhoneString)) {
+            Toast.makeText(this, com.example.macwojs.inventoryapp.R.string.valid_supplier_phone,
                     Toast.LENGTH_SHORT).show();
             return 2;
         }
 
-                // Insert a new pet into the provider, returning the content URI for the new pet.
-        if (currentInventUri==null){
+        // Insert a new product into the provider, returning the content URI for the new product.
+        if (currentInventUri == null) {
             Uri newUri = getContentResolver().insert(InventorEntry.CONTENT_URI, values);
             // Show a toast message depending on whether or not the insertion was successful
             if (newUri == null) {
@@ -238,7 +249,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-        if (currentInventUri==null){
+        if (currentInventUri == null) {
             return null;
         }
 
@@ -252,7 +263,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         };
 
         return new CursorLoader(this,
-                InventorContract.InventorEntry.CONTENT_URI,
+                currentInventUri,
                 projection,
                 null,
                 null,
@@ -262,7 +273,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         if (cursor.moveToFirst()) {
-            // Find the columns of pet attributes that we're interested in
+            // Find the columns of product attributes that we're interested in
             int nameColumnIndex = cursor.getColumnIndex(InventorEntry.COLUMN_INVENTOR_NAME);
             int priceColumnIndex = cursor.getColumnIndex(InventorEntry.COLUMN_INVENTOR_PRICE);
             int quantityColumnIndex = cursor.getColumnIndex(InventorEntry.COLUMN_INVENTOR_QUANTITY);
@@ -330,7 +341,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         builder.setNegativeButton(R.string.keep_editing, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 // User clicked the "Keep editing" button, so dismiss the dialog
-                // and continue editing the pet.
+                // and continue editing the product.
                 if (dialog != null) {
                     dialog.dismiss();
                 }

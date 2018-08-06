@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2016 The Android Open Source Project
+<?xml version="1.0" encoding="utf-8"?><!-- Copyright (C) 2016 The Android Open Source Project
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
      You may obtain a copy of the License at
@@ -9,10 +8,8 @@
      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
      See the License for the specific language governing permissions and
      limitations under the License.
--->
-<!-- Layout for the editor -->
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+--><!-- Layout for the editor -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -20,42 +17,44 @@
     android:padding="@dimen/activity_margin"
     tools:context=".EditorActivity">
 
-    <!-- Overview category -->
+    <!-- Product category -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <!-- Label -->
+        <!-- Title label -->
         <TextView
-            android:text="@string/book"
-            style="@style/CategoryStyle" />
+            style="@style/CategoryStyle"
+            android:text="@string/book" />
 
         <!-- Input fields -->
         <LinearLayout
-            android:layout_height="wrap_content"
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:paddingLeft="4dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingLeft="4dp">
 
-            <!-- Name field -->
+            <!-- Title field -->
             <EditText
                 android:id="@+id/edit_name"
+                style="@style/EditorFieldStyle"
                 android:hint="@string/hint_title"
                 android:inputType="textCapWords"
-                style="@style/EditorFieldStyle" />
+                android:maxLength="300" />
 
-            <!-- Breed field -->
+            <!-- Price field -->
             <EditText
                 android:id="@+id/edit_price"
+                style="@style/EditorFieldStyle"
                 android:hint="@string/hint_price"
                 android:inputType="numberDecimal"
-                style="@style/EditorFieldStyle" />
+                android:maxLength="9" />
         </LinearLayout>
     </LinearLayout>
 
-    <!-- Measurement category -->
+    <!-- Quantity category -->
     <LinearLayout
         android:id="@+id/container_quantity"
         android:layout_width="match_parent"
@@ -64,25 +63,27 @@
 
         <!-- Label -->
         <TextView
-            android:text="@string/quantity"
-            style="@style/CategoryStyle" />
+            style="@style/CategoryStyle"
+            android:text="@string/quantity" />
 
-        <!-- Weight field -->
+
         <LinearLayout
-            android:layout_height="wrap_content"
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:paddingLeft="4dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingLeft="4dp">
+            <!-- Quantity field -->
             <EditText
                 android:id="@+id/edit_quantity"
+                style="@style/EditorFieldStyle"
                 android:hint="@string/hint_quantity"
                 android:inputType="number"
-                style="@style/EditorFieldStyle" />
+                android:maxLength="9" />
         </LinearLayout>
     </LinearLayout>
 
-    <!-- Overview category -->
+    <!-- Supplier category -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -90,36 +91,40 @@
 
         <!-- Label -->
         <TextView
-            android:text="@string/category_supplier"
-            style="@style/CategoryStyle" />
+            style="@style/CategoryStyle"
+            android:text="@string/category_supplier" />
 
         <!-- Input fields -->
         <LinearLayout
-            android:layout_height="wrap_content"
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:paddingLeft="4dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingLeft="4dp">
 
             <!-- Name field -->
             <EditText
                 android:id="@+id/edit_supplier_name"
+                style="@style/EditorFieldStyle"
                 android:hint="@string/hint_name"
                 android:inputType="textCapWords"
-                style="@style/EditorFieldStyle" />
+                android:maxLength="300" />
 
-            <!-- Breed field -->
+            <!-- Phone field -->
             <EditText
                 android:id="@+id/edit_phone"
+                style="@style/EditorFieldStyle"
                 android:hint="@string/phone"
                 android:inputType="phone"
-                style="@style/EditorFieldStyle" />
+                android:maxLength="13" />
         </LinearLayout>
     </LinearLayout>
+
+    <!-- Confirmation button -->
     <Button
         android:id="@+id/confirm_button"
-        android:paddingTop="16dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add"/>
+        android:paddingTop="16dp"
+        android:text="@string/add_button" />
 </LinearLayout>

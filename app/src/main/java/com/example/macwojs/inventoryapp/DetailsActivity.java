@@ -1,33 +1,22 @@
 package com.example.macwojs.inventoryapp;
 
-import android.Manifest;
 import android.app.AlertDialog;
 import android.app.LoaderManager;
-import android.content.ContentUris;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.macwojs.inventoryapp.data.InventorContract;
-import com.example.macwojs.inventoryapp.data.InventorDbHelper;
 import com.example.macwojs.inventoryapp.data.InventorContract.InventorEntry;
 
 public class DetailsActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
@@ -40,7 +29,6 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
 
     private static final Integer EXISTING_PET_LOADER = 0;
 
-    private InventorDbHelper mDbHelper;
 
     private Uri currentInventUri = null;
 
@@ -60,14 +48,14 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
         getLoaderManager().initLoader(EXISTING_PET_LOADER, null, this);
 
         // Find all relevant views that we will need to read user input from
-        mNameTextView = (TextView) findViewById(R.id.nameData);
-        mPriceTextView = (TextView) findViewById(R.id.priceData);
-        mQuantityTextView = (TextView) findViewById(R.id.quantityData);
-        mSupplierNameTextView = (TextView) findViewById(R.id.supplierData);
-        mSupplierPhoneTextView = (TextView) findViewById(R.id.supplierPhone);
+        mNameTextView = findViewById(R.id.nameData);
+        mPriceTextView = findViewById(R.id.priceData);
+        mQuantityTextView = findViewById(R.id.quantityData);
+        mSupplierNameTextView = findViewById(R.id.supplierData);
+        mSupplierPhoneTextView = findViewById(R.id.supplierPhone);
 
-        Button mButtonUpdate = (Button) findViewById(R.id.editButton);
-        Button mButtonDelete = (Button) findViewById(R.id.delButton);
+        Button mButtonUpdate = findViewById(R.id.editButton);
+        Button mButtonDelete = findViewById(R.id.delButton);
 
         mButtonUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,10 +76,9 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
         // Setup OnTouchListeners on all the input fields, so we can determine if the user
         // has touched or modified them. This will let us know if there are unsaved changes
         // or not, if the user tries to leave the editor without saving.
-        mDbHelper = new InventorDbHelper(this);
 
-        Button decreaseButton = (Button) findViewById(R.id.decrease_button);
-        Button increaseButton = (Button) findViewById(R.id.increase_button);
+        Button decreaseButton = findViewById(R.id.decrease_button);
+        Button increaseButton = findViewById(R.id.increase_button);
         decreaseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -124,7 +111,7 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
             }
         });
 
-        Button callButton = (Button) findViewById(R.id.call_button);
+        Button callButton = findViewById(R.id.call_button);
         callButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -158,10 +145,11 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
                 null,
                 null);
     }
+
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         if (cursor.moveToFirst()) {
-            // Find the columns of pet attributes that we're interested in
+            // Find the columns of product attributes that we're interested in
             int nameColumnIndex = cursor.getColumnIndex(InventorEntry.COLUMN_INVENTOR_NAME);
             int priceColumnIndex = cursor.getColumnIndex(InventorEntry.COLUMN_INVENTOR_PRICE);
             int quantityColumnIndex = cursor.getColumnIndex(InventorEntry.COLUMN_INVENTOR_QUANTITY);
@@ -183,6 +171,7 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
             mSupplierPhoneTextView.setText(supplierPhone);
         }
     }
+
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
     }
@@ -219,9 +208,9 @@ public class DetailsActivity extends AppCompatActivity implements LoaderManager.
     private void deleteProduct() {
         // Only perform the delete if this is an existing pet.
 
-        // Call the ContentResolver to delete the pet at the given content URI.
+        // Call the ContentResolver to delete the product at the given content URI.
         // Pass in null for the selection and selection args because the mCurrentPetUri
-        // content URI already identifies the pet that we want.
+        // content URI already identifies the product that we want.
         int rowsDeleted = getContentResolver().delete(currentInventUri, null, null);
 
         // Show a toast message depending on whether or not the delete was successful.

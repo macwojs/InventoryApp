@@ -16,8 +16,10 @@ import com.example.macwojs.inventoryapp.data.InventorContract.InventorEntry;
  */
 public class InventorProvider extends ContentProvider {
 
-    /** Tag for the log messages */
-    public static final String LOG_TAG = InventorProvider.class.getSimpleName();
+    /**
+     * Tag for the log messages
+     */
+    private static final String LOG_TAG = InventorProvider.class.getSimpleName();
 
     private InventorDbHelper mDbHelper;
 
@@ -33,10 +35,14 @@ public class InventorProvider extends ContentProvider {
         return true;
     }
 
-    /** URI matcher code for the content URI for the Inventors table */
+    /**
+     * URI matcher code for the content URI for the Inventors table
+     */
     private static final int INVENTORY = 100;
 
-    /** URI matcher code for the content URI for a single Inventor in the Inventors table */
+    /**
+     * URI matcher code for the content URI for a single Inventor in the Inventors table
+     */
     private static final int INVENTORY_ID = 101;
 
     /**
@@ -52,8 +58,8 @@ public class InventorProvider extends ContentProvider {
         // should recognize. All paths added to the UriMatcher have a corresponding code to return
         // when a match is found.
 
-        sUriMatcher.addURI(InventorContract.CONTENT_AUTHORITY,InventorContract.PATH_INVENTORY,INVENTORY);
-        sUriMatcher.addURI(InventorContract.CONTENT_AUTHORITY,InventorContract.PATH_INVENTORY + "/#",INVENTORY_ID);
+        sUriMatcher.addURI(InventorContract.CONTENT_AUTHORITY, InventorContract.PATH_INVENTORY, INVENTORY);
+        sUriMatcher.addURI(InventorContract.CONTENT_AUTHORITY, InventorContract.PATH_INVENTORY + "/#", INVENTORY_ID);
     }
 
     /**
@@ -88,7 +94,7 @@ public class InventorProvider extends ContentProvider {
                 // arguments that will fill in the "?". Since we have 1 question mark in the
                 // selection, we have 1 String in the selection arguments' String array.
                 selection = InventorEntry._ID + "=?";
-                selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
+                selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
 
                 // This will perform a query on the Inventors table where the _id equals 3 to return a
                 // Cursor containing that row of the table.
@@ -140,7 +146,7 @@ public class InventorProvider extends ContentProvider {
             throw new IllegalArgumentException("Inventor requires valid quantity");
         }
 
-        // Get writeable database
+        // Get writable database
         SQLiteDatabase database = mDbHelper.getWritableDatabase();
 
         // Insert the new Inventor with the given values
@@ -157,6 +163,7 @@ public class InventorProvider extends ContentProvider {
         // Return the new URI with the ID (of the newly inserted row) appended at the end
         return ContentUris.withAppendedId(uri, id);
     }
+
     /**
      * Updates the data at the given selection and selection arguments, with the new ContentValues.
      */
@@ -172,7 +179,7 @@ public class InventorProvider extends ContentProvider {
                 // so we know which row to update. Selection will be "_id=?" and selection
                 // arguments will be a String array containing the actual ID.
                 selection = InventorEntry._ID + "=?";
-                selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
+                selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
                 return updateInventor(uri, contentValues, selection, selectionArgs);
             default:
                 throw new IllegalArgumentException("Update is not supported for " + uri);
@@ -245,7 +252,7 @@ public class InventorProvider extends ContentProvider {
             case INVENTORY_ID:
                 // Delete a single row given by the ID in the URI
                 selection = InventorEntry._ID + "=?";
-                selectionArgs = new String[] { String.valueOf(ContentUris.parseId(uri)) };
+                selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
                 rowsDeleted = database.delete(InventorEntry.TABLE_NAME, selection, selectionArgs);
                 break;
             default:

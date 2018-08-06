@@ -143,23 +143,22 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        style="?android:attr/buttonBarButtonStyle">
         <Button
             android:id="@+id/editButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
             android:layout_margin="@dimen/fab_margin"
-            android:text="Edit"/>
+            style="?android:attr/buttonBarButtonStyle"
+            android:text="@string/edit_button"/>
         <Button
             android:id="@+id/delButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
             android:layout_margin="@dimen/fab_margin"
-            android:text="Delete"/>
+            style="?android:attr/buttonBarButtonStyle"
+            android:text="@string/delete_button"/>
 
     </LinearLayout>
 </RelativeLayout>

@@ -21,24 +21,35 @@
     <string name="editor_update_product_failed">Update product failled.</string>
     <string name="editor_update_product_succesfull">Update product succesfull.</string>
 
-    <!-- Dialog message to ask the user to confirm deleting the current pet [CHAR LIMIT=NONE] -->
-    <string name="delete_dialog_msg">Delete this pet?</string>
+    <!-- Dialog message to ask the user to confirm deleting the current  [CHAR LIMIT=NONE] -->
+    <string name="delete_dialog_msg">Delete this product?</string>
 
-    <!-- Dialog button text for the option to confirm deleting the current pet [CHAR LIMIT=20] -->
+    <!-- Dialog button text for the option to confirm deleting the current product [CHAR LIMIT=20] -->
     <string name="delete">Delete</string>
 
-    <!-- Dialog button text for the option to cancel deletion of the current pet [CHAR LIMIT=20] -->
+    <!-- Dialog button text for the option to cancel deletion of the current product [CHAR LIMIT=20] -->
     <string name="cancel">Cancel</string>
 
     <!-- Dialog message when user is leaving editor but hasn't saved changes [CHAR LIMIT=NONE] -->
     <string name="unsaved_changes_dialog_msg">Discard your changes and quit editing?</string>
     <!-- Dialog button text for the option to discard a user's changes [CHAR LIMIT=20] -->
     <string name="discard">Discard</string>
-    <!-- Dialog button text for the option to keep editing the current pet [CHAR LIMIT=20] -->
+    <!-- Dialog button text for the option to keep editing the current product [CHAR LIMIT=20] -->
     <string name="keep_editing">Keep Editing</string>
     <string name="datails_delete_product_failed">Delete product failed.</string>
     <string name="datails_delete_product_succesfull">Delete product succesfull.</string>
     <string name="menu_add">+</string>
     <string name="empty_dont_have">You do not have any products.</string>
     <string name="edit_how_add">To add a product click the button in the upper right corner.</string>
+    <string name="valid_name">You must provide the product name.</string>
+    <string name="valid_price">You must provide the product price.</string>
+    <string name="valid_quantity">You must provide the product quantity.</string>
+    <string name="valid_supplier_name">You must provide the name of supplier.</string>
+    <string name="valid_supplier_phone">You must provide the supplier\'s phone number.</string>
+    <string name="add_button">Add</string>
+    <string name="sale_button">Sale!</string>
+    <string name="edit_button">Edit</string>
+    <string name="delete_button">Delete</string>
+    <string name="add_title">Add</string>
+    <string name="update_title">Update</string>
 </resources>
